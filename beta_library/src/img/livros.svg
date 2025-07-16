@@ -1,0 +1,10 @@
+<!-- src/img/livros.svg -->
+<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4A90E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 19.5V5a2 2 0 0 1 2-2h13"/>
+  <path d="M20 4v15.5a2 2 0 0 1-2 2H4"/>
+  <path d="M16 4v13"/>
+</svg>
+
+
+
+
