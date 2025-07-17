@@ -1,10 +1,11 @@
-<!-- src/img/livros.svg -->
-<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4A90E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-  <path d="M4 19.5V5a2 2 0 0 1 2-2h13"/>
-  <path d="M20 4v15.5a2 2 0 0 1-2 2H4"/>
-  <path d="M16 4v13"/>
+<svg width="48" height="48" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iconGradientBook" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4facfe"/>
+      <stop offset="100%" stop-color="#00f2fe"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#iconGradientBook)" d="M96 64c-17.7 0-32 14.3-32 32v320c0 17.7 14.3 32 32 32h304v-32H96V96h304v224h32V96c0-17.7-14.3-32-32-32H96z"/>
 </svg>
-
-
 
 

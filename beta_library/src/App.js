@@ -1,11 +1,11 @@
-import Logo from './components/logoBeta';
 import './App.css';
+import HeaderBeta from './components/headerBeta';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        < Logo />
+        < HeaderBeta />
       </header>
     </div>
   );
