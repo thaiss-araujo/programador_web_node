@@ -1,5 +1,4 @@
 import logo from '../../img/logo.svg'
-
 import styled from 'styled-components'
 
 const LogoContainer = styled.div `
