@@ -1,8 +1,8 @@
 import { getTodosLivros, getLivroPorId, insereLivro, modificaLivro, deletaLivroPorId} from '../Models/livroModel.js';
 
-export const getLivros = (req, res) => {
+export const getLivros = async (req, res) => {
     try{
-        const livros = getTodosLivros();
+        const livros = await getTodosLivros();
         res.send(livros);
     } catch (error) {
         res.status(500);
@@ -10,12 +10,12 @@ export const getLivros = (req, res) => {
     }
 };
 
-export const getLivro = (req, res) => {
+export const getLivro = async (req, res) => {
     try{
         const id = req.params.id
 
         if(id && Number(id)){
-            const livro = getLivroPorId(id)         
+            const livro = await getLivroPorId(id)         
             res.send(livro)
         }else{
             res.status(422)
@@ -28,47 +28,34 @@ export const getLivro = (req, res) => {
     }
 }
 
-// export const postLivro = (req, res) => {
-//     try{
-//         const livroNovo = req.body;
-
-//         if(req.body.nome){
-//             insereLivro(livroNovo);
-//             res.status(201).json(livroNovo);
-//         }else{
-//             res.status(422)
-//             res.send('Campo obrigartório')
-//         }
-  
-//     } catch (error){
-//         res.status(500).send(error.message);
-//     }
-// }
-
 export const postLivro = async (req, res) => {
-    try {
-        const livroNovo = req.body
-
-        if (req.body.nome) {
-            const livroCriado = await insereLivro(livroNovo)
-            res.status(201).json(livroCriado)
-        } else {
-            res.status(422).send('Campo "nome" é obrigatório')
-        }
-
-    } catch (error) {
-        res.status(500).send(error.message)
+  try {
+    const livroNovo = req.body;
+ 
+    if (livroNovo.nome) {
+      const livros = await getTodosLivros();
+      const ultimoId = livros.length > 0 ? Math.max(...livros.map(l => l.id)) : 0;
+      const novoLivroComId = { id: ultimoId + 1, ...livroNovo };
+ 
+      insereLivro(novoLivroComId);
+      res.status(201).json(novoLivroComId);
+    } else {
+      res.status(422).send("O campo 'nome' é obrigatório");
     }
-}
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+ 
 
 
-export const patchLivro = (req, res) => {
+export const patchLivro = async (req, res) => {
     try{
         const id = req.params.id
 
         if(id && Number(id)){
             const body = req.body
-            modificaLivro(body, id)
+            await modificaLivro(body, id)
             res.send('Livro modificado com sucesso!')
         }else{
             res.status(422)
@@ -80,11 +67,11 @@ export const patchLivro = (req, res) => {
     }
 }
 
-export const deletaLivro = (req, res) => {
+export const deletaLivro =async (req, res) => {
     try {
         const id = req.params.id
         if(id && Number(id)){
-            deletaLivroPorId(id)
+            await deletaLivroPorId(id)
             res.send("livro deletado com sucesso")
         }else{
             res.status(422)

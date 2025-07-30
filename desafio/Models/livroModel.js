@@ -1,33 +1,42 @@
-import fs from 'fs'
+import { readFile, writeFile } from 'fs/promises';
 
-function getTodosLivros(){
-    return JSON.parse(fs.readFileSync('livros.json'))
+const arquivoJSON = 'Dados/livros.json';
+
+async function getTodosLivros() {
+    const dados = await readFile(arquivoJSON, 'utf-8');
+    return JSON.parse(dados);
 }
 
-function getLivroPorId(id){
-    const livros = JSON.parse(fs.readFileSync('livros.json'))
-    const livroFiltrado = livros.filter(livro => livro.id === id) [0]
-    return livroFiltrado
+async function getLivroPorId(id) {
+    const dados = await readFile(arquivoJSON, 'utf-8');
+    const livros = JSON.parse(dados);
+    const livroFiltrado = livros.filter(livro => livro.id === Number(id))[0];
+    return livroFiltrado;
 }
 
-function insereLivro(livroNovo){
-    const livros = JSON.parse(fs.readFileSync('livros.json'));
+async function insereLivro(livroNovo) {
+    const dados = await readFile(arquivoJSON, 'utf-8');
+    const livros = JSON.parse(dados);
     const novaListaDeLivros = [...livros, livroNovo];
-    fs.writeFileSync('livros.json', JSON.stringify(novaListaDeLivros));
+    await writeFile(arquivoJSON, JSON.stringify(novaListaDeLivros));
 }
 
-function modificaLivro(modificacoes, id){
-   let livrosAtuais = JSON.parse(fs.readFileSync('livros.json')); 
-   const indiceModificado = livrosAtuais.findIndex(livro => livro.id === id);
-   const conteudoMudado = {...livrosAtuais[indiceModificado], ...modificacoes}; 
-   livrosAtuais[indiceModificado] = conteudoMudado;
-   fs.writeFileSync('livros.json', JSON.stringify(livrosAtuais));
+async function modificaLivro(modificacoes, id) {
+    const dados = await readFile(arquivoJSON, 'utf-8');
+    let livrosAtuais = JSON.parse(dados);
+
+    const indiceModificado = livrosAtuais.findIndex(livro => livro.id === Number(id));
+    const conteudoMudado = { ...livrosAtuais[indiceModificado], ...modificacoes };
+    livrosAtuais[indiceModificado] = conteudoMudado;
+
+    await writeFile(arquivoJSON, JSON.stringify(livrosAtuais));
 }
 
-function deletaLivroPorId(id){
-   const livros = JSON.parse(fs.readFileSync('livros.json'));
-   const livrosFiltrados = livros.filter(livro => livro.id !== id)
-   fs.writeFileSync('livros.json', JSON.stringify(livrosFiltrados));
+async function deletaLivroPorId(id) {
+    const dados = await readFile(arquivoJSON, 'utf-8');
+    const livros = JSON.parse(dados);
+    const livrosFiltrados = livros.filter(livro => livro.id !== Number(id));
+    await writeFile(arquivoJSON, JSON.stringify(livrosFiltrados));
 }
 
-export {getTodosLivros, getLivroPorId, insereLivro, modificaLivro, deletaLivroPorId}
+export { getTodosLivros, getLivroPorId, insereLivro, modificaLivro, deletaLivroPorId };
